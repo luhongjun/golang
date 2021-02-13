@@ -30,3 +30,5 @@ Godoc 提取并生成 Go 包的文档
 - [vet 命令](http://docscn.studygolang.com/cmd/vet/)
 
 Vet 检查 Go 源代码并报告可疑的结构，例如 Printf 调用的参数与格式字符串不一致
+
+## 环境变量
