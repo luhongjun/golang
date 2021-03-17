@@ -26,18 +26,7 @@ go build -v //编译时显示包名
 - get: 下载并安装包和依赖
 - install: 编译并安装包和依赖
 - list: 列出包
-  
-- [mod](http://docscn.studygolang.com/cmd/go/#hdr-Module_maintenance)
-```text
-download    download modules to local cache
-edit        edit go.mod from tools or scripts
-graph       print module requirement graph
-init        initialize new module in current directory
-tidy        add missing and remove unused modules
-vendor      make vendored copy of dependencies
-verify      verify dependencies have expected content
-why         explain why packages or modules are needed
-```
+
 - run: 编译并运行go程序
 - test: 运行测试
 - tool: 运行go提供的工具
