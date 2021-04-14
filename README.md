@@ -1,6 +1,9 @@
 # golang
 归纳了Golang语言的整套知识体系，包括Golang基本概念、经典代码案列以及其他相关资料等
 
+*学习网站以及资料*
+- [Go 编程时光](http://golang.iswbm.com/en/latest/)
+
 ## Go工具的命令文档
 
 - [go命令](http://docscn.studygolang.com/cmd/go/)
