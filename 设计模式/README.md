@@ -3,6 +3,7 @@
 **推荐阅读**
 
 - [Golang设计模式](http://books.studygolang.com/go-patterns)
+- [Github - google/wire, Go的编译时依赖注入的工具](https://github.com/google/wire)
 
 | 类型 | 设计模式 | 代码示例 | 
 | --- | --- | --- | 
@@ -56,3 +57,5 @@ func (student *Student) SetNumber(number int32) *Student {
 student := new(Student)
 student.SetName("小明").SetNumber("078")
 ```
+
+## [Wire —— 依赖项注入自动连接组件]()

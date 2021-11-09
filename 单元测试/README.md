@@ -4,6 +4,9 @@ golang 有自带的["testing"库包](https://pkg.go.dev/testing)来提供单元�
 
 go 语言原生支持了单元测试，使用上非常简单，测试代码只需要放到以 `_test.go` 结尾的文件中即可。
 
+**推荐阅读**
+- [Golang 官方包"testing"](https://pkg.go.dev/testing)
+
 ## 单元测试的函数
 
 在*_test.go文件中，有三种类型的函数：测试函数、基准测试（benchmark）函数、示例函数
