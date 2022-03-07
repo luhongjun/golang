@@ -1,0 +1,21 @@
+# go env
+## 通过键值对的形式输出
+GO111MODULE="on"
+GOARCH="amd64"
+GOBIN=""
+GOCACHE="/root/.cache/go-build"
+
+# go env -json
+## 通过json的形式输出
+{
+    "AR": "ar",
+    "CC": "gcc",
+    "CGO_CFLAGS": "-g -O2",
+    "CGO_CPPFLAGS": ""
+}
+
+# go env -w key=value
+## 添加/修改key以及value值
+
+# go env -u key
+## 删除key值
