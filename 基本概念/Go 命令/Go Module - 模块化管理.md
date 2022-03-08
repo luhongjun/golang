@@ -1,5 +1,18 @@
 # Go Module (go mod指令)
 
+## 资料参考
+
+- [go mod - 官方文档](http://docscn.studygolang.com/cmd/go/#hdr-Module_maintenance)
+- [Go Modules 使用教程](https://www.cnblogs.com/klsw/p/11537850.html)
+- [Go Modules详解](https://objcoding.com/2018/09/13/go-modules/)
+- [Github golang/go 关于 Module 的 wiki](https://github.com/golang/go/wiki/Modules#go-modules)
+- [Golang中文网 - 使用Go Module构建项目](https://studygolang.com/articles/21348?fr=sidebar)
+- [关于 Golang 的项目管理](http://golang.iswbm.com/en/latest/chapters/p03.html)
+- [何处安放我们的 Go 代码](https://liujiacai.net/blog/2019/10/24/go-modules/)
+- [Go Module 终极入门](https://mp.weixin.qq.com/s?__biz=MzUxMDI4MDc1NA==&mid=2247483713&idx=1&sn=817ffef56f8bc5ca09a325c9744e00c7&source=41#wechat_redirect)
+
+## 历史背景
+
 Golang 的包管理一直被大众所诟病的一个点，但是我们可以看到现在确实是在往好的方向进行发展。下面是官方的包管理工具的发展历史：
 
 1. 在 Go1.5 版本之前，所有的依赖包都是存放在 GOPATH 下，没有版本控制。这个类似 Google 使用单一仓库来管理代码的方式。这种方式的最大的弊端就是无法实现包的多版本控制，比如项目 A 和项目 B 依赖于不同版本的 package，如果 package 没有做到完全的向前兼容，往往会导致一些问题。
@@ -15,15 +28,32 @@ GOPATH将在1.13版本中弃用，建议后面安装 Golang 1.13或者更高的�
 - 解析自定义包作为GOPATH的替代。
 - 包版本和发布
 
+## 环境变量
+
+用环境变量 GO111MODULE 开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是 auto。
+
+- GO111MODULE=off 无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。
+- GO111MODULE=on 模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据 go.mod 下载依赖。
+- GO111MODULE=auto 在 $GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。
+
+## go mod 命令
+
+| go mod 命令 | 概要 |
+| --- | --- |
+| go mod init [module_name] | 在当前目录初始化模块（会生成 go.mod 文件） |
+| go mod edit [-flag]| 通过工具方式来编辑 go.mod 文件 |
+| go mod download | 将 go.mod 中依赖下载到缓存中（即当前路径的vendor目录） |
+| go mod graph | 打印模块依赖图 |
+| go mod tidy | 拉取缺少的模块，移除不用的模块 |
+| go mod vendor | 将依赖复制到 vendor 目录 |
+| go mod verity | 检查依赖是否正确 |
+
+
 ## go.mod 文件
 
-我们可以通过`go mod init [your_module_name]`可以在当前模块（即当前项目目录下）创建 go.mod 文件，内容如下：
-``` 
-module your_module_name
+我们可以通过`go mod init [your_module_name]`可以在当前模块（即当前项目目录下）创建 go.mod 文件。
 
-go 1.13
-```
-后面如果开发者在当前模块中有依赖其他模块包，可以再通过执行`go mod tidy`重新更新依赖，此时查看 go.mod 文件，会看到新的内容如下：
+此时查看 go.mod 文件，会看到新的内容如下：
 ``` 
 module your_module_name
 
@@ -33,7 +63,6 @@ require rsc.io/quote v1.5.2
 ```
 
 ---------
-
 go.mod 文件一般都不需要开发者手动去编辑，直接通过命令的方式就可以让程序自动地进行修改。但是我们还是有必要清楚 go.mod 文件里面的语法。
 
 关于 go.mod 文件的一些说明可以查看[官网说明-The go.mod file](http://docscn.studygolang.com/cmd/go/#hdr-The_go_mod_file)
@@ -48,9 +77,10 @@ module example.com/m
 go 1.14
 
 //表明当前模块所需要的 给定版本或更高版本的特定模块
+//指令会自动为某些依赖后面添加"//indirect"注释，来标明此包并非当前模块直接导入的
 require (
     golang.org/x/text v0.3.0
-    gopkg.in/yaml.v2 v2.1.0 
+    gopkg.in/yaml.v2 v2.1.0  //indirect
 )
 
 //表明当前模块需要排除指定的模块
@@ -83,44 +113,3 @@ rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
 ```
 Go会给当前模块依赖的包以及版本打上标记并将相关的唯一值写入 go.sum 中，以防数据被偷偷篡改。
-
-## go mod 
-
-```text
-//初始化 modules，会生成一个 go.mod 文件
-go mod init [hojun_module_name]
-//下载 modules 到本地缓存
-go mod download
-//提供一种命令行交互修改 go.mod 的方式
-go mod edit -replace xxx-rep/uri/xx@v1.2    
-//将 module 的依赖图在命令行打印出来
-go mod graph
-//清理 go.mod 中的依赖，会添加缺失的依赖，同时移除没有用到的依赖
-go mod tidy
-//将依赖包打包拷贝到项目的 vendor 目录下，值得注意的是并不会将 test code 中的依赖包打包到 vendor 中
-go mod vendor
-//用来检测依赖包自下载之后是否被改动过
-go mod verify
-//解释为什么 package 或者 module 是需要
-go mod why
-```
-
-
-## 资料参考
-
-- [go mod - 官方文档](http://docscn.studygolang.com/cmd/go/#hdr-Module_maintenance)
-- [Go Modules 使用教程](https://www.cnblogs.com/klsw/p/11537850.html)
-- [Go Modules详解](https://objcoding.com/2018/09/13/go-modules/)
-- [Github golang/go 关于 Module 的 wiki](https://github.com/golang/go/wiki/Modules#go-modules)
-- [Golang中文网 - 使用Go Module构建项目](https://studygolang.com/articles/21348?fr=sidebar)
-- [关于 Golang 的项目管理](http://golang.iswbm.com/en/latest/chapters/p03.html)
-- [何处安放我们的 Go 代码](https://liujiacai.net/blog/2019/10/24/go-modules/)
-- [Go Module 终极入门](https://mp.weixin.qq.com/s?__biz=MzUxMDI4MDc1NA==&mid=2247483713&idx=1&sn=817ffef56f8bc5ca09a325c9744e00c7&source=41#wechat_redirect)
-
-### 环境变量
-
-用环境变量 GO111MODULE 开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是 auto。
-
-- GO111MODULE=off 无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。
-- GO111MODULE=on 模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据 go.mod 下载依赖。
-- GO111MODULE=auto 在 $GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。

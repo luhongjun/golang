@@ -1,0 +1,29 @@
+格式： go mod edit [-flag] [go.mod]
+
+# 格式化 go.mod 文件
+go mod edit -fmt
+
+# 修改模块名为hello
+go mod edit -module hello
+
+# 修改golang的版本
+go mod edit  -go=1.17.3
+
+# 输出 go.mod 内容
+go mod edit -print
+go mod edit -json
+
+# 添加/移除“require”指定的包
+go mod edit -require=path@version
+go mod edit -droprequire=path
+
+go mod edit -require=github.com/gin-gonic/gin@v1.7.7
+go mod edit -droprequire=github.com/gin-gonic/gin
+
+# 添加/移除“exclude”指定的包
+go mod edit -exclude=path@version
+go mod edit -dropexclude=path@version
+
+# 添加/移除“replace”指定的包
+go mod edit -replace=old[@v]=new[@v]
+go mod edit -dropreplace=old[@v]
