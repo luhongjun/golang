@@ -1,0 +1,60 @@
+#############################################
+# `go doc`命令可以打印附于Go语言程序实体上的文档。我们可以通过把程序实体的标识符作为该命令的参数来达到查看其文档的目的
+# `godoc`命令是一个很强大的工具，同样用于展示指定代码包的文档。
+#############################################
+
+go doc wire // 查看wire包所有实体
+go doc wire ProvidedValue // 查看wire包结构体ProvidedValue
+go doc wire InterfaceValue // 查看wire包的InterfaceValue函数
+
+
+> go doc wire
+package wire // import "github.com/google/wire"
+
+Package wire contains directives for Wire code generation. For an overview
+of working with Wire, see the user guide at
+https://github.com/google/wire/blob/master/docs/guide.md
+
+The directives in this package are used as input to the Wire code generation
+tool. The entry point of Wire's analysis are injector functions: function
+templates denoted by only containing a call to Build. The arguments to Build
+describes a set of providers and the Wire code generation tool builds a
+directed acylic graph of the providers' output types. The generated code
+will fill in the function template by using the providers from the provider
+set to instantiate any needed types.
+
+func Build(...interface{}) string
+type Binding struct{}
+    func Bind(iface, to interface{}) Binding
+type ProvidedValue struct{}
+    func InterfaceValue(typ interface{}, x interface{}) ProvidedValue
+    func Value(interface{}) ProvidedValue
+type ProviderSet struct{}
+    func NewSet(...interface{}) ProviderSet
+type StructFields struct{}
+    func FieldsOf(structType interface{}, fieldNames ...string) StructFields
+type StructProvider struct{}
+    func Struct(structType interface{}, fieldNames ...string) StructProvider
+
+> go doc wire ProvidedValue
+package wire // import "github.com/google/wire"
+
+type ProvidedValue struct{}
+    A ProvidedValue is an expression that is copied to the generated injector.
+
+func InterfaceValue(typ interface{}, x interface{}) ProvidedValue
+func Value(interface{}) ProvidedValue
+
+
+> go doc wire InterfaceValue
+package wire // import "github.com/google/wire"
+
+func InterfaceValue(typ interface{}, x interface{}) ProvidedValue
+    InterfaceValue binds an expression to provide a specific interface type. The
+    first argument is a pointer to the interface which user wants to provide.
+    The second argument is the actual variable value whose type implements the
+    interface.
+
+    Example:
+
+        var MySet = wire.NewSet(wire.InterfaceValue(new(io.Reader), os.Stdin))
