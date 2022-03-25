@@ -283,3 +283,73 @@ TEXT ·Swap(SB), $0-32
 ## 函数调用规范
 
 在Go汇编语言中CALL指令用于调用函数，RET指令用于从调用函数返回。但是CALL和RET指令并没有处理函数调用时输入参数和返回值的问题。CALL指令类似PUSH IP和JMP somefunc两个指令的组合，首先将当前的IP指令寄存器的值压入栈中，然后通过JMP指令将要调用函数的地址写入到IP寄存器实现跳转。而RET指令则是和CALL相反的操作，基本和POP IP指令等价，也就是将执行CALL指令时保存在SP中的返回地址重新载入到IP寄存器，实现函数的返回。
+
+和C语言函数不同，Go语言函数的参数和返回值完全通过栈传递。下面是Go函数调用时栈的布局图：
+![函数调用参数布局](img/函数调用参数布局.png)
+首先是调用函数前准备的输入参数和返回值空间。然后`CALL`指令将首先触发返回地址入栈操作。在进入到被调用函数内之后，汇编器自动插入了BP寄存器相关的指令，因此BP寄存器和返回地址是紧挨着的。再下面就是当前函数的局部变量的空间，包含再次调用其它函数需要准备的调用参数空间。被调用的函数执行RET返回指令时，先从栈恢复BP和SP寄存器，接着取出的返回地址跳转到对应的指令执行。
+
+## 高级汇编语言
+
+Go汇编语言其实是一种高级的汇编语言。在这里高级一词并没有任何褒义或贬义的色彩，而是要强调Go汇编代码和最终真实执行的代码并不完全等价。Go汇编语言中一个指令在最终的目标代码中可能会被编译为其它等价的机器指令。Go汇编实现的函数或调用函数的指令在最终代码中也会被插入额外的指令。要彻底理解Go汇编语言就需要彻底了解汇编器到底插入了哪些指令。
+
+为了便于分析，我们先构造一个禁止栈分裂的printnl函数。printnl函数内部都通过调用runtime.printnl函数输出换行：
+``` 
+TEXT ·printnl_nosplit(SB), NOSPLIT, $8
+    CALL runtime·printnl(SB)
+    RET
+```
+
+然后通过`go tool asm -S main_amd64.s`指令查看编译后的目标代码：
+``` 
+"".printnl_nosplit STEXT nosplit size=29 args=0xffffffff80000000 locals=0x10
+0x0000 00000 (main_amd64.s:5) TEXT "".printnl_nosplit(SB), NOSPLIT    $16
+0x0000 00000 (main_amd64.s:5) SUBQ $16, SP
+
+0x0004 00004 (main_amd64.s:5) MOVQ BP, 8(SP)
+0x0009 00009 (main_amd64.s:5) LEAQ 8(SP), BP
+
+0x000e 00014 (main_amd64.s:6) CALL runtime.printnl(SB)
+
+0x0013 00019 (main_amd64.s:7) MOVQ 8(SP), BP
+0x0018 00024 (main_amd64.s:7) ADDQ $16, SP
+0x001c 00028 (main_amd64.s:7) RET
+```
+
+输出代码中我们删除了非指令的部分。为了便于讲述，我们将上述代码重新排版，并根据缩进表示相关的功能:
+``` 
+TEXT "".printnl(SB), NOSPLIT, $16
+    SUBQ $16, SP
+        MOVQ BP, 8(SP)
+        LEAQ 8(SP), BP
+            CALL runtime.printnl(SB)
+        MOVQ 8(SP), BP
+    ADDQ $16, SP
+RET
+```
+
+第一层是TEXT指令表示函数开始，到RET指令表示函数返回。第二层是SUBQ $16, SP指令为当前函数帧分配16字节的空间，在函数返回前通过ADDQ $16, SP指令回收16字节的栈空间。我们谨慎猜测在第二层是为函数多分配了8个字节的空间。那么为何要多分配8个字节的空间呢？再继续查看第三层的指令：开始部分有两个指令MOVQ BP, 8(SP)和LEAQ 8(SP), BP，首先是将BP寄存器保持到多分配的8字节栈空间，然后将8(SP)地址重新保持到了BP寄存器中；结束部分是MOVQ 8(SP), BP指令则是从栈中恢复之前备份的前BP寄存器的值。最里面第四次层才是我们写的代码，调用runtime.printnl函数输出换行。
+
+如果去掉NOSPILT标志，再重新查看生成的目标代码，会发现在函数的开头和结尾的地方又增加了新的指令。下面是经过缩进格式化的结果：
+``` 
+TEXT "".printnl_nosplit(SB), $16
+L_BEGIN:
+    MOVQ (TLS), CX
+    CMPQ SP, 16(CX)
+    JLS  L_MORE_STK
+
+        SUBQ $16, SP
+            MOVQ BP, 8(SP)
+            LEAQ 8(SP), BP
+                CALL runtime.printnl(SB)
+            MOVQ 8(SP), BP
+        ADDQ $16, SP
+
+L_MORE_STK:
+    CALL runtime.morestack_noctxt(SB)
+    JMP  L_BEGIN
+RET
+```
+
+其中开头有三个新指令，MOVQ (TLS), CX用于加载g结构体指针，然后第二个指令CMPQ SP, 16(CX)SP栈指针和g结构体中stackguard0成员比较，如果比较的结果小于0则跳转到结尾的L_MORE_STK部分。当获取到更多栈空间之后，通过JMP L_BEGIN指令跳转到函数的开始位置重新进行栈空间的检测。
+
+## PCDATA和FUNCDATA
