@@ -1,1 +1,1 @@
-技术书籍/*.pdf filter=lfs diff=lfs merge=lfs -text
+技术书籍/Go高级编程.pdf filter=lfs diff=lfs merge=lfs -text
