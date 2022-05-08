@@ -10,3 +10,34 @@
 
 [如何发布自己的Golang包到开源项目呢](http://golang.iswbm.com/en/latest/c03/c03_03.html)
 
+
+## 技术栈
+
+-------------------
+网关：
+- Kong网关：https://docs.konghq.com/gateway/
+- Apache APISIX：https://apisix.apache.org/zh/docs
+-------------------
+容器：
+- Kubernetes：https://kubernetes.io/zh/docs/home/
+  
+Kubernetes 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化
+
+- Docker Compose：https://docs.docker.com/compose/reference/
+-------------------
+数据库：
+
+- gorm：https://gorm.io/zh_CN/docs/index.html
+
+- 
+-------------------
+数据结构与算法：
+
+- LeetCode：https://books.halfrost.com/leetcode/
+
+-------------------
+测试：
+
+
+
+
