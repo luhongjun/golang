@@ -10,48 +10,15 @@
 | 原子操作 | 原子操作在进行过程中是不允许中断的；在底层，由CPU提供芯片级别的支持，所以绝对有效。即便在拥有多CPU核心，或者多CPU的计算机系统中，原子操作的保证也是不可撼动的。 |
 
 
-## 相关的官方包与数据结构
+## 标准库与数据结构
 
-```text
-//互斥锁
-sync.Mutex： Lock / Unlock
-//读写锁
-sync.RWMutex：RLock （读锁，不能写） / Lock（写锁，不能读写）
-
-//条件变量+互斥锁
-sync.Cond： Wait（等待通知）、单发通知（Signal）和广播通知（Broadcast）
-----------------
-var mailbox uint8 //定义信箱
-var lock sync.RWMutex
-cond := sync.Cond(sync.locker)
-sendCond 
-----------------
-
-//原子性操作
-sync/atomic
-原子操作的运算： 加法（Add）、比较并交换（compare and swap， CAS）、加载（load）、存储（store）、交换（swap）
-适用的数据类型：int32、int64、uint32、uint64、uintptr、unsafe.Pointer
-atomic.Value：Store / load
-
-//
-sync.WaitGroup：适用于一对多的goroutine协作流程，三个指针方法：Add、Done和Wait
-sync.Once：只保证执行一次
-
-//临时对象池，一般当作针对某种数据的缓存来用
-sync.Pool：结构体类型，只有两个方法： Put（在当前池存放对象） / Get（在当前池获取对象）
-
-//并发安全字典
-sync.Map：
-
-
-## race
-
-
-## unsafe
-## runtime
-
-## atomic
-
-
-```
+| 数据结构 | 方法 |
+| --- | --- |
+| 互斥锁 sync.Mutex | Lock / Unlock |
+| 读写锁 sync.RWMutex |  Lock / Unlock （写锁）、RLock / RUnlock （读锁） |
+| 条件变量 sync.Cond | Wait（等待通知）、单发通知（Signal）和广播通知（Broadcast） | 
+| sync.WaitGroup | Add(delta int)、Done()、Wait() |
+| sync.Once | Do(f func()) |
+| 临时对象池 sync.Pool | Put（在当前池存放对象） / Get（在当前池获取对象） |
+| 并发安全字典 sync.Map | LoadAndDelete / Delete / Store |
 
