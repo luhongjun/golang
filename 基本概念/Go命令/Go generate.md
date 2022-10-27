@@ -70,3 +70,10 @@ package main
 ```gotemplate
 //go:generate bindata -o jpegs.go pic1.jpg pic2.jpg pic3.jpg
 ```
+
+## 自动化
+
+我们可以在构建项目的脚本中执行这个命令，例如在 makefile 中：
+```
+go generate && go build .
+ ```

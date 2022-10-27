@@ -1,17 +1,26 @@
 # golang
 归纳了Golang语言的整套知识体系，包括Golang基本概念、经典代码案列以及其他相关资料等
 
-*学习网站以及资料*
-- [Go 编程时光](http://golang.iswbm.com/en/latest/)
 
 
-[Golang 语言编码规范](http://golang.iswbm.com/en/latest/c03/c03_04.html#) 并没有强制要求，但是开发者可以在根据自身开发团队内定的规范下再遵循业界比较统一的习惯。
+## 知识点导航
+
+- 技术书籍
+  - [Go Rpc开发指南.pdf](技术书籍/Go%20Rpc开发指南.pdf)
+  - [Go1.5源码剖析.pdf](技术书籍/Go1.5源码剖析.pdf)
+- 基本概念
+  - [Go命令](基本概念/Go命令/README.md) (Command go详见官网： http://docscn.studygolang.com/cmd/go/)
+  - Go语言标准库
+  - 包和工具
+- Go底层原理
+- Go并发编程
+- Go网络编程
+- 单元测试
+- [Go设计模式](设计模式/README.md)
 
 
-[如何发布自己的Golang包到开源项目呢](http://golang.iswbm.com/en/latest/c03/c03_03.html)
 
 
-## 技术栈
 
 
 -------------------
