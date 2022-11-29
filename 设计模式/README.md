@@ -26,3 +26,14 @@
 | --- | --- |
 | 链式方法 | [代码示例](./链式方式.md) |
 | 依赖注入（巧用 wire 组件） | 见：[学习笔记](./Wire依赖项注入编译组件.md) <br> [Github - google/wire, Go的编译时依赖注入的工具](https://github.com/google/wire) |
+
+
+- 控制继承约束
+```go
+type IFace interface {
+        // A private method to prevent users implementing the
+    // interface and so future additions to it will not
+    // violate Go 1 compatibility.
+    private()
+}
+```
