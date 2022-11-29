@@ -27,7 +27,15 @@
   - Golang汇编
   - Go内存管理
 - [Go并发编程](Go并发编程/README.md)
-  - [Go并发编程实战 第2版.pdf](Go并发编程/Go并发编程实战%20第2版.pdf)
+  - 标准库及其数据结构
+    - 互斥锁 sync.Mutex
+    - 读写锁 sync.RWMutex
+    - 条件变量 sync.Cond
+    - 全局等待 sync.WaitGroup
+    - 只执行一次 sync.Once
+    - 临时对象池 sync.Pool
+    - 并发安全字典 sync.Map
+  - [Go并发编程实战（第2版）.pdf](Go并发编程/Go并发编程实战（第2版）.pdf)
   - [Goroutine调度.docx](Go并发编程/Goroutine调度.docx)
 - Go网络编程
 - [单元测试](./单元测试/README.md)
