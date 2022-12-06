@@ -23,8 +23,10 @@
     - [>> Go1.17 Release Notes](https://go.dev/doc/go1.17)
     - [>> Go1.16 Release Notes](https://go.dev/doc/go1.16)
 - Go底层原理
-  - CGO编程
+  - CGO编程：Go语言通过自带的一个叫CGO的工具来支持C语言函数调用，同时我们可以用Go语言导出C动态库接口给其它语言使用
+    - [CGO编程](Go底层原理/CGO编程/CGO编程.docx)
   - Golang汇编
+    - [Go汇编语言.docx](Go底层原理/Golang汇编/Go汇编语言.docx)
   - Go内存管理
 - [Go并发编程](Go并发编程/README.md)
   - 标准库及其数据结构
@@ -35,6 +37,7 @@
     - 只执行一次 sync.Once
     - 临时对象池 sync.Pool
     - 并发安全字典 sync.Map
+    - 原子 sync/atomic
   - [Go并发编程实战（第2版）.pdf](Go并发编程/Go并发编程实战（第2版）.pdf)
   - [Goroutine调度.docx](Go并发编程/Goroutine调度.docx)
 - Go网络编程
@@ -52,6 +55,8 @@
     - [goconvey](https://github.com/smartystreets/goconvey/wiki/Documentation)：支持golang的单元测试框架，能够自动监控文件修改并启动测试，并可以将测试结果实时输出到web界面，goconvey提供了丰富的断言简化测试用例的编写
     - [gomock](https://github.com/golang/mock)：可使用`mockgen`指令为某些模拟类生成源代码
 - [Go设计模式](设计模式/README.md)
+- Golang的开发工具，提高效能
+  - goup
 
 
 
