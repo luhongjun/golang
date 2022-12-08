@@ -15,8 +15,9 @@
   - [Go高级编程.pdf](技术书籍/Go高级编程.pdf)
 - 基本概念
   - [Go命令](基本概念/Go命令/README.md) (Command go详见官网： http://docscn.studygolang.com/cmd/go/)
-  - Go语言标准库
+  - Go语言标准库 //@todo
   - 包和工具
+    - [GOROOT路径下的目录结构](基本概念/包和工具/GOROOT路径下的目录结构说明.md)
   - [历史版本的发行说明](基本概念/历史版本的发行说明/README.md) （官网 release History：https://go.dev/doc/devel/release）
     - [>> Go1.19 Release Notes](https://go.dev/doc/go1.19)
     - [>> Go1.18 Release Notes](https://go.dev/doc/go1.18)
@@ -28,6 +29,11 @@
   - Golang汇编
     - [Go汇编语言.docx](Go底层原理/Golang汇编/Go汇编语言.docx)
   - Go内存管理
+    - [Go语言底层机制.docx](Go底层原理/Go内存管理/Go语言底层机制.docx)
+    - [Go内存管理.docx](Go底层原理/Go内存管理/Go内存管理.docx)
+    - 标准库：
+      - [reflect反射](Go底层原理/reflect-反射.docx)
+      - [unsafe非类型安全操作](Go底层原理/unsafe-非类型安全操作.docx)
 - [Go并发编程](Go并发编程/README.md)
   - 标准库及其数据结构
     - 互斥锁 sync.Mutex
@@ -40,7 +46,7 @@
     - 原子 sync/atomic
   - [Go并发编程实战（第2版）.pdf](Go并发编程/Go并发编程实战（第2版）.pdf)
   - [Goroutine调度.docx](Go并发编程/Goroutine调度.docx)
-- Go网络编程
+- Go网络编程 //@todo
 - [单元测试](./单元测试/README.md)
   - [go test 指令详解](./单元测试/go%20test%20指令详解.md)
   - [go test的实现原理.docx](./单元测试/go%20test实现原理.docx)
