@@ -1,0 +1,85 @@
+# Go语言标准库
+
+- buildtin：底层库声明
+  - 类型
+    - `type any = interface{}`
+    - `type comparable interface{ comparable }`
+  - 函数
+    - `func append(slice []Type, elems ...Type) []Type`
+    - `func copy(dst, src []Type) int`
+    - `func delete(m map[Type]Type1, key Type)`
+    - `func len(v Type) int`
+    - `func cap(v Type) int`
+    - `func make(t Type, size ...IntegerType) Type`
+    - `func new(Type) *Type`
+    - `func complex(r, i FloatType) ComplexType`
+    - `func real(c ComplexType) FloatType`
+    - `func imag(c ComplexType) FloatType`
+    - `func close(c chan<- Type)`
+    - `func recover() any`
+- [输入输出（Input/Output）](输入输出IO.docx)
+- [日志](日志库log.docx)
+  - log：普通日志处理
+  - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
+- 文本处理
+  - [mime处理](mime库.docx)
+    - mime：实现了MIME的部分规定
+    - mime/multipart：实现了MIME的multipart解析，参见RFC 2046。该实现适用于HTTP（RFC 2388）和常见浏览器生成的multipart主体
+    - mime/quotedprintable：实现 RFC 2045.指定的quoted-printable编码
+  - [文本与字符](文本与字符.docx)
+    - string：字符串操作
+    - bytes：byte slice便捷操作
+    - [strcov](strconv.docx)：字符串与基本数据类型之间的转换
+    - regexp：正则表达式
+    - unicode：unicode码点、UTF8/16编码
+- 编码处理
+  - hash：提供hash函数的接口
+    - hash/alder32：实现了Adler-32校验和算法，参见[RFC 1950](https://www.rfc-editor.org/rfc/rfc1950)
+    - hash/crc32：实现了32位循环冗余校验（CRC-32）的校验和算法，参见[wiki](http://en.wikipedia.org/wiki/Cyclic_redundancy_check)
+    - hash/crc64：实现64位循环冗余校验或CRC-64校验和。 参见[wiki](http://en.wikipedia.org/wiki/Cyclic_redundancy_check)
+    - hash/fnc：实现了FNV-1和FNV-1a（非加密hash函数），算法参见[wiki](http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
+    - hash/maphash
+  - 加密与解密
+    - crypto/aes
+    - crypto/cipher
+    - ...
+- [日期与时间](日期与时间.docx)
+  - Location
+  - Time
+  - Duration
+  - Timer 和 Ticker 定时器
+- 数学计算
+  - math：基本数学函数
+  - math/big：大数实现
+  - math/bit：
+  - math/cmplx：复数基本函数
+  - math/rand：伪随机生成器
+- [文件系统](文件系统.docx)
+  - os：平台无关的操作系统功能实现
+  - path/filepath：操作路径
+  - io/fs：抽象文件系统
+- [数据持久存储与交换](数据持久存储与交换.docx)
+  - database/sql：SQL/SQL-Like 数据库操作接口
+  - encoding/json：
+  - encoding/xml：
+  - csv
+  - ...
+- 数据压缩与归档
+  - compress/zlib：gnu zlib 压缩
+  - compress/gzip：读写 gnu zip 文件
+  - compress/bzip2：bzip2 压缩
+  - archive/tar：tar 归档访问
+  - archive/zip：zip 归档访问
+- [图像处理](图片处理：image库.docx)
+  - image 
+  - image/color：给图像上色
+  - image/color/palette
+  - image/draw：绘制图像
+  - image/gif
+  - image/jpeg
+  - image/png
+- 应用构建与debug
+  - [embed](embed.docx)：提供对嵌入在运行中的Go程序中的文件的访问
+- 排序与搜索
+  - [sort](sort.docx)
+  - [index/suffixarray](字符串子串搜索：suffixarray库.docx)：通过使用内存中的后缀树实现了对数级时间消耗的子字符串搜索 

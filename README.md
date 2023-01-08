@@ -15,7 +15,9 @@
   - [Go高级编程.pdf](技术书籍/Go高级编程.pdf)
 - 基本概念
   - [Go命令](基本概念/Go命令/README.md) (Command go详见官网： http://docscn.studygolang.com/cmd/go/)
-  - Go语言标准库 //@todo
+    - go env：获取/修改golang的环境变量获取/修改golang的环境变量
+    - ...
+  - [Go语言标准库](基本概念/Go语言标准库/README.md)
   - 包和工具
     - [GOROOT路径下的目录结构](基本概念/包和工具/GOROOT路径下的目录结构说明.md)
   - [历史版本的发行说明](基本概念/历史版本的发行说明/README.md) （官网 release History：https://go.dev/doc/devel/release）
@@ -60,7 +62,28 @@
       其工作原理见此文章：`https://bou.ke/blog/monkey-patching-in-go/`
     - [goconvey](https://github.com/smartystreets/goconvey/wiki/Documentation)：支持golang的单元测试框架，能够自动监控文件修改并启动测试，并可以将测试结果实时输出到web界面，goconvey提供了丰富的断言简化测试用例的编写
     - [gomock](https://github.com/golang/mock)：可使用`mockgen`指令为某些模拟类生成源代码
+- 数据结构与算法：
+  - 数据结构：
+    - [heap堆](数据结构与算法/数据结构/heap堆.md)
+    - [list链表](数据结构与算法/数据结构/list链表.md)
+    - [ring环](数据结构与算法/数据结构/ring环.md)
+  - 算法：
+    - [>> LeetCode](https://books.halfrost.com/leetcode/)
 - [Go设计模式](设计模式/README.md)
+  - 其他设计模式参考
+    - [链式方式](设计模式/链式方式.md)
+    - [wire依赖注入](设计模式/Wire依赖项注入编译组件.md)
+  - 主要的设计模式
+
+| 设计模式  | 示例                                                           |
+|-------|--------------------------------------------------------------|
+| 创建型模式 | [单例模式](设计模式/单例模式.md)、[对象池](设计模式/对象池.md)、[工厂方法](设计模式/工厂方法.md) |
+| 结构型模式 | [装饰器模式](设计模式/装饰器模式.md)、[代理模式](设计模式/代理模式.md)                  |
+| 行为型模式 | [观察者模式](设计模式/事件订阅与通知.md)、[策略模式](设计模式/策略模式.md)                |
+| 同步型模式 | [信号量](设计模式/信号量.md)                                           |
+| 稳定型模式 | [断路器模式](设计模式/断路器模式.md)                                       |
+| 函数    | [函数式选项模式](设计模式/函数式编程.md)                                     |
+
 - Golang的开发工具，提高效能
   - goup
 
@@ -78,12 +101,8 @@
 -------------------
 数据结构与算法：
 
-- LeetCode：https://books.halfrost.com/leetcode/
+- 
 
--------------------
-测试：
-
-- Go自带testing：https://pkg.go.dev/testing
 
 
 
