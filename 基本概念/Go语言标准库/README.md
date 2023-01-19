@@ -18,9 +18,11 @@
     - `func close(c chan<- Type)`
     - `func recover() any`
 - [输入输出（Input/Output）](输入输出IO.docx)
-- [日志](日志库log.docx)
-  - log：普通日志处理
-  - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
+- 系统
+  - time：时间处理
+  - [日志](日志库log.docx)
+    - log：普通日志处理
+    - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
 - 文本处理
   - [mime处理](mime库.docx)
     - mime：实现了MIME的部分规定
@@ -28,10 +30,18 @@
     - mime/quotedprintable：实现 RFC 2045.指定的quoted-printable编码
   - [文本与字符](文本与字符.docx)
     - string：字符串操作
+      - string.Reader 字符串读取器
+      - string.replacer 字符串替换器
     - bytes：byte slice便捷操作
     - [strcov](strconv.docx)：字符串与基本数据类型之间的转换
     - regexp：正则表达式
     - unicode：unicode码点、UTF8/16编码
+  - 文本高级处理
+    - bufio：缓冲区I/O
+    - text/scanner：提供UTF-8编码的文本读取器和标记器
+    - text/tabwriter：提供支持缩进对齐的文本处理器
+    - text/template：用于生成文本输出的数据驱动模板
+    - template/parse：
 - 编码处理
   - hash：提供hash函数的接口
     - hash/alder32：实现了Adler-32校验和算法，参见[RFC 1950](https://www.rfc-editor.org/rfc/rfc1950)
@@ -40,9 +50,40 @@
     - hash/fnc：实现了FNV-1和FNV-1a（非加密hash函数），算法参见[wiki](http://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
     - hash/maphash
   - 加密与解密
-    - crypto/aes
-    - crypto/cipher
-    - ...
+    - crypto/aes：AES加解密
+    - crypto/cipher：
+    - crypto/des
+    - crypto/dsa
+    - crypto/ecdsa
+    - crypto/ed25519
+    - crypto/elliptic
+    - crypto/hmac
+    - crypto/md5
+    - crypto/rand
+    - crypto/rc4
+    - crypto/rsa
+    - crypto/sha1
+    - crypto/sha256
+    - crypto/sha512
+    - crypto/suble
+    - crypto/tls
+    - crypto/x509
+    - crypto/x509/pkix
+  - 数据压缩与归档
+    - compress/zlib：gnu zlib 压缩
+    - compress/gzip：读写 gnu zip 文件
+    - compress/bzip2：bzip2 压缩
+    - archive/tar：tar 归档访问
+    - archive/zip：zip 归档访问
+- 数据结构
+  - container/heap：堆
+  - container/list：列表
+  - container/ring：环
+- 系统
+  - time：时间处理
+  - [日志](日志库log.docx)
+    - log：普通日志处理
+    - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
 - [日期与时间](日期与时间.docx)
   - Location
   - Time
@@ -64,12 +105,7 @@
   - encoding/xml：
   - csv
   - ...
-- 数据压缩与归档
-  - compress/zlib：gnu zlib 压缩
-  - compress/gzip：读写 gnu zip 文件
-  - compress/bzip2：bzip2 压缩
-  - archive/tar：tar 归档访问
-  - archive/zip：zip 归档访问
+
 - [图像处理](图片处理：image库.docx)
   - image 
   - image/color：给图像上色
@@ -82,4 +118,13 @@
   - [embed](embed.docx)：提供对嵌入在运行中的Go程序中的文件的访问
 - 排序与搜索
   - [sort](sort.docx)
-  - [index/suffixarray](字符串子串搜索：suffixarray库.docx)：通过使用内存中的后缀树实现了对数级时间消耗的子字符串搜索 
+  - [index/suffixarray](字符串子串搜索：suffixarray库.docx)：通过使用内存中的后缀树实现了对数级时间消耗的子字符串搜索
+
+
+sync
+sync/atomic
+syscall
+syscall/js
+unsafe
+test/...
+context
