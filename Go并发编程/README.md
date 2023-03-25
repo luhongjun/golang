@@ -12,13 +12,52 @@
 
 ## 标准库及其数据结构
 
-| 数据结构 | 方法 |
-| --- | --- |
-| 互斥锁 sync.Mutex | Lock / Unlock |
-| 读写锁 sync.RWMutex |  Lock / Unlock （写锁）、RLock / RUnlock （读锁） |
-| 条件变量 sync.Cond | Wait（等待通知）、单发通知（Signal）和广播通知（Broadcast） | 
-| sync.WaitGroup | Add(delta int)、Done()、Wait() |
-| sync.Once | Do(f func()) |
-| 临时对象池 sync.Pool | Put（在当前池存放对象） / Get（在当前池获取对象） |
-| 并发安全字典 sync.Map | LoadAndDelete / Delete / Store |
+- （互斥锁）sync.Mutex
+  - Lock：阻塞性加锁
+  - Unlock：解锁
+  - TryLock：非阻塞性加锁
+- （读写锁）sync.RWMutex
+  - Lock：阻塞性写加锁
+  - Unlock：写解锁，会试图唤醒所有因欲进行读锁定而被阻塞的goroutine
+  - TryLock
+  - RLock：阻塞性读加锁
+  - RUnlock：读解锁
+- （条件变量）sync.Cond
+  - sync.NewCond(l locker)：创建Cond
+  - Wait：等待通知。会自动地对与该条件变量关联的那个锁进行解锁，并且使它所在的 goroutine阻塞。一旦接收到通知，该方法所在的goroutine就会被唤醒，并且该方法会立即尝试锁定该锁
+  - Signal：单发通知
+  - Broadcast：广播
+- （只执行一次）sync.Once
+  - Do
+- sync.WaitGroup
+  - Add(delta int)
+  - Done()
+  - Wait()
+- （临时对象池）sync.Pool
+  - Put（在当前池存放对象）
+  - Get（在当前池获取对象）：一般会先尝试从与本地P对应的那个本地私有池和本地共享池中获取一个对象值。如果获取失败，它就会试图从其他P的本地共享池中偷一个对象值并直接返回给调用方。如果依然未果，它就只能把希望寄托于当前临时对象池的对象值生成函数了
+- （并发安全字典）sync.Map
+  - LoadAndDelete
+  - Delete
+  - Store
+- （原子操作）atomic
+  - 原子操作的运算： 
+    - 加法（Add）
+    - 比较并交换（compare and swap， CAS）
+    - 加载（load）
+    - 存储（store）
+    - 交换（swap）
+  - 适用的数据类型：
+    - int32
+    - int64
+    - uint32
+    - uint64
+    - uintptr
+    - unsafe.Pointer
 
+## runtime包调度Goroutine
+
+- `runtime.GOMAXPROCS(n int) int`：设置常规运行时系统中的P的最大数量
+- `runtime.Goexit()`：使当前goroutine的运行终止，而其他goroutine并不会受此影响。runtime.Goexit函数在终止当前goroutine之前，会先执行该goroutine中所有还未执行的defer语句。该函数会把被终止的goroutine置于Gdead状态，并将其放入本地P的自由G列表，然后触发调度器的一轮调度流程。
+- `runtime.Gosched()`：返回当前Go运行时系统中处于非Gdead状态的用户G的数量。这些goroutine被视为“活跃的”或者“可被调度运行的”。该函数的返回值总会大于等于1。
+- `runtime/debug.SetMaxStack(bytes int) int`：约束单个goroutine所能申请栈空间的最大尺寸。如果运行时系统在为某个goroutine增加栈空间的时候，发现它的实际尺寸已经超过了设定值，就会发起一个运行时恐慌并终止程序的运行。
