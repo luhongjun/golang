@@ -21,6 +21,9 @@ func Callers(skip int, pc []uintptr) int
 
 在 Golang 中，每个函数都有一个唯一的地址，可以使用 funcName.Pointer() 获取。而 runtime.FuncForPC 函数则可以通过该地址获取到对应的函数对象。
 ```gotemplate
+/**
+    pc 表示函数的指针地址
+**/
 func FuncForPC(pc uintptr) *Func
 
 //返回函数的指针地址

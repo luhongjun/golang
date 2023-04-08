@@ -20,7 +20,7 @@
 - [输入输出（Input/Output）](输入输出IO.docx)
 - 系统
   - time：时间处理
-  - [日志](日志库log.docx)
+  - [日志](../日志/日志库log.docx)
     - log：普通日志处理
     - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
 - 文本处理
@@ -81,7 +81,7 @@
   - container/ring：环
 - 系统
   - time：时间处理
-  - [日志](日志库log.docx)
+  - [日志](../日志/日志库log.docx)
     - log：普通日志处理
     - log/syslog：通过 UNIX domain sockets, UDP or TCP，向syslog守护进程发送日志
 - [日期与时间](日期与时间.docx)
